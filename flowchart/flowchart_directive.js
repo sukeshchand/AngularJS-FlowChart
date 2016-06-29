@@ -12,7 +12,8 @@ angular.module('flowChart', ['dragging'] )
   	templateUrl: "flowchart/flowchart_template.html",
   	replace: true,
   	scope: {
-  		chart: "=chart",
+  	    chart: "=chart",
+  	    nodesselectchanged: '&nodesSelectChanged',
   	},
 
   	//
@@ -30,8 +31,8 @@ angular.module('flowChart', ['dragging'] )
 //
 .directive('chartJsonEdit', function () {
 	return {
-		restrict: 'A',
-		scope: {
+	    restrict: 'A',
+	    scope: {
 			viewModel: "="
 		},
 		link: function (scope, elem, attr) {
@@ -195,7 +196,7 @@ angular.module('flowChart', ['dragging'] )
 	//
 	$scope.mouseDown = function (evt) {
 
-		$scope.chart.deselectAll();
+	    $scope.chart.deselectAll();
 
 		dragging.startDrag(evt, {
 
@@ -288,7 +289,7 @@ angular.module('flowChart', ['dragging'] )
 	//
 	$scope.nodeMouseDown = function (evt, node) {
 
-		var chart = $scope.chart;
+	    var chart = $scope.chart;
 		var lastMouseCoords;
 
 		dragging.startDrag(evt, {
@@ -328,12 +329,13 @@ angular.module('flowChart', ['dragging'] )
 			// The node wasn't dragged... it was clicked.
 			//
 			clicked: function () {
-				chart.handleNodeClicked(node, evt.ctrlKey);
+			    chart.handleNodeClicked(node, evt.ctrlKey);
+			    $scope.nodesselectchanged({nodes: [node], selected: true});
 			},
 
 		});
 	};
-
+    
 	//
 	// Handle mousedown on a connection.
 	//

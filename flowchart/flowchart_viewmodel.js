@@ -604,6 +604,7 @@ var flowchart = {
 			for (var i = 0; i < nodes.length; ++i) {
 				var node = nodes[i];
 				node.select();
+				$scope.nodesSelect(nodes);
 			}
 
 			var connections = this.connections;
@@ -650,7 +651,7 @@ var flowchart = {
 		//
 		this.handleNodeClicked = function (node, ctrlKey) {
 
-			if (ctrlKey) {
+		    if (ctrlKey) {
 				node.toggleSelected();
 			}
 			else {
@@ -682,6 +683,7 @@ var flowchart = {
 				connection.select();
 			}
 		};
+
 
 		//
 		// Delete all nodes and connections that are selected.

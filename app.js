@@ -2,8 +2,9 @@
 //
 // Define the 'app' module.
 //angular.module('mySceApp', ['ngSanitize'])
-angular.module('app', ['flowChart', 'ngSanitize']).
-    filter('html', ['$sce', function ($sce) {
+angular.module('app', ['flowChart', 'ngSanitize'])
+
+.filter('html', ['$sce', function ($sce) {
     return function (text) {
         return $sce.trustAsHtml(text);
     };
@@ -194,6 +195,9 @@ angular.module('app', ['flowChart', 'ngSanitize']).
 			evt.preventDefault();
 		}
 	};
+        $scope.nodesSelectChanged = function(nodes, sel) {
+            alert(nodes  + ' - ' + sel.toString());
+        };
 
 	//
 	// Event handler for key-up on the flowchart.
@@ -245,8 +249,8 @@ angular.module('app', ['flowChart', 'ngSanitize']).
 			id: nextNodeID++,
 			x: 0,
 			y: 0,
-			width: 600,
-			height: 200,
+			width: 200,
+			height: 80,
 			NodeDirection: "Vertical",
 			inputConnectors: [
 				{
