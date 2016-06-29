@@ -13,6 +13,8 @@ var flowchart = {
 	// Width of a node.
 	//
 	flowchart.defaultNodeWidth = 250;
+	flowchart.defaultNodeHeight = 120;
+	flowchart.defaultNodeDirection = "Vertical";
 
 	//
 	// Amount of space reserved for displaying the node's name.
@@ -22,24 +24,42 @@ var flowchart = {
 	//
 	// Height of a connector in a node.
 	//
-	flowchart.connectorHeight = 35;
+	flowchart.connectorHeight = 50;
+	flowchart.connectorWidth = 50;
 
 	//
 	// Compute the Y coordinate of a connector, given its index.
 	//
-	flowchart.computeConnectorY = function (connectorIndex) {
-		return flowchart.nodeNameHeight + (connectorIndex * flowchart.connectorHeight);
+	flowchart.computeConnectorY = function (connectorIndex, nodeHeight) {
+	    var connectorHeight = (connectorIndex * flowchart.connectorHeight);
+	    var connectorY = (nodeHeight / 2) - (connectorHeight / 2);
+	    return flowchart.nodeNameHeight  + connectorY;
+	}
+
+	flowchart.computeConnectorX = function (connectorIndex, nodeWidth) {
+	    var connectorWidth = (connectorIndex * flowchart.connectorWidth);
+	    var connectorX = (nodeWidth / 2) - (connectorWidth / 2);
+	    return connectorX;
 	}
 
 	//
 	// Compute the position of a connector in the graph.
 	//
 	flowchart.computeConnectorPos = function (node, connectorIndex, inputConnector) {
-		return {
-			x: node.x() + (inputConnector ? 0 : node.width ? node.width() : flowchart.defaultNodeWidth),
-			y: node.y() + flowchart.computeConnectorY(connectorIndex),
-		};
-	};
+	    // happens when click on node to made the connection
+	    if (node.data.NodeDirection === "Vertical") {
+	        return {
+	            x: node.x() + flowchart.computeConnectorX(connectorIndex, node.width()),
+	            y: node.y() + (inputConnector ? 0 : node.height ? node.height() : flowchart.defaultNodeHeight)
+	        };
+	    } else {
+	        return {
+	            x: node.x() + (inputConnector ? 0 : node.width ? node.width() : flowchart.defaultNodeWidth),
+	            y: node.y() + flowchart.computeConnectorY(connectorIndex, node.height())
+	        };
+
+	    }
+    };
 
 	//
 	// View model for a connector.
@@ -83,18 +103,25 @@ var flowchart = {
 	//
 	// Create view model for a list of data models.
 	//
-	var createConnectorsViewModel = function (connectorDataModels, x, parentNode) {
-		var viewModels = [];
+	var createConnectorsViewModel = function (connectorDataModels, x, y, parentNode) {
+	    var viewModels = [];
+        if (connectorDataModels) {
+            var nodeHeight = parentNode.data.height ? parentNode.data.height : flowchart.defaultNodeHeight;
+            var nodeWidth = parentNode.data.width ? parentNode.data.width : flowchart.defaultNodeWidth;
+            for (var i = 0; i < connectorDataModels.length; ++i) {
+                var connectorViewModel = {};
+                if (parentNode.data.NodeDirection === "Vertical") {
+                    connectorViewModel =
+                        new flowchart.ConnectorViewModel(connectorDataModels[i], flowchart.computeConnectorX(i, nodeWidth), y, parentNode);
 
-		if (connectorDataModels) {
-			for (var i = 0; i < connectorDataModels.length; ++i) {
-				var connectorViewModel = 
-					new flowchart.ConnectorViewModel(connectorDataModels[i], x, flowchart.computeConnectorY(i), parentNode);
-				viewModels.push(connectorViewModel);
-			}
-		}
-
-		return viewModels;
+                } else {
+                    connectorViewModel =
+                        new flowchart.ConnectorViewModel(connectorDataModels[i], x, flowchart.computeConnectorY(i, nodeHeight), parentNode);
+                }
+	    		viewModels.push(connectorViewModel);
+	    	}
+	    }
+        return viewModels;
 	};
 
 	//
@@ -104,12 +131,15 @@ var flowchart = {
 
 		this.data = nodeDataModel;
 
-		// set the default width value of the node
+		// set the default width & height value of the node
 		if (!this.data.width || this.data.width < 0) {
 			this.data.width = flowchart.defaultNodeWidth;
 		}
-		this.inputConnectors = createConnectorsViewModel(this.data.inputConnectors, 0, this);
-		this.outputConnectors = createConnectorsViewModel(this.data.outputConnectors, this.data.width, this);
+		if (!this.data.height || this.data.height < 0) {
+		    this.data.height = flowchart.defaultNodeHeight;
+		}
+		this.inputConnectors = createConnectorsViewModel(this.data.inputConnectors, 0, 0, this);
+		this.outputConnectors = createConnectorsViewModel(this.data.outputConnectors, this.data.width, this.data.height, this);
 
 		// Set to true when the node is selected.
 		this._selected = false;
@@ -142,18 +172,16 @@ var flowchart = {
 			return this.data.width;
 		}
 
-		//
-		// Height of the node.
-		//
-		this.height = function () {
-			var numConnectors =
-				Math.max(
-					this.inputConnectors.length, 
-					this.outputConnectors.length);
-			return flowchart.computeConnectorY(numConnectors);
-		}
+       
+		this.height = function() {
+	        if (this.data.height) {
+	            return this.data.height;
+	        } else {
+	            return this.defaultNodeHeight;
+	        }
+	    }
 
-		//
+	    //
 		// Select the node.
 		//
 		this.select = function () {
@@ -184,9 +212,10 @@ var flowchart = {
 		//
 		// Internal function to add a connector.
 		this._addConnector = function (connectorDataModel, x, connectorsDataModel, connectorsViewModel) {
+		    var nodeHeight = this.height ? this.height() : this.defaultNodeHeight;
 			var connectorViewModel = 
 				new flowchart.ConnectorViewModel(connectorDataModel, x, 
-						flowchart.computeConnectorY(connectorsViewModel.length), this);
+						flowchart.computeConnectorY(connectorsViewModel.length, nodeHeight), this);
 
 			connectorsDataModel.push(connectorDataModel);
 

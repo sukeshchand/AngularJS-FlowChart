@@ -43,29 +43,11 @@
 
     </rect>
 
-    <text
-      ng-attr-x="{{node.width()/2}}"
-      y="25"
-      text-anchor="middle"
-      alignment-baseline="middle"
-      >
-      {{node.name()}}
-    </text>
-
     <g
       ng-repeat="connector in node.inputConnectors"
       ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
       class="connector input-connector"
       >
-      <text
-        ng-attr-x="{{connector.x() + 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="left"
-        alignment-baseline="middle"
-        >
-        {{connector.name()}}
-      </text>
-      
       <circle       
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
         ng-attr-r="{{connectorSize}}" 
@@ -79,15 +61,6 @@
       ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
       class="connector output-connector"
       >
-      <text
-        ng-attr-x="{{connector.x() - 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="end"
-        alignment-baseline="middle"
-        >
-        {{connector.name()}}
-      </text>
-
       <circle             
         ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
         ng-attr-r="{{connectorSize}}" 
@@ -108,33 +81,26 @@
           ng-attr-d="M {{connection.sourceCoordX()}}, {{connection.sourceCoordY()}}
                      C {{connection.sourceTangentX()}}, {{connection.sourceTangentY()}}
                        {{connection.destTangentX()}}, {{connection.destTangentY()}}
-                       {{connection.destCoordX()}}, {{connection.destCoordY()}}"
+                       {{connection.destCoordX()}}, {{connection.destCoordY() - 5}}"
           >
         </path>
 
-      <text
-            ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
-        ng-attr-x="{{connection.middleX()}}"
-        ng-attr-y="{{connection.middleY()}}"
-        text-anchor="middle"
-        alignment-baseline="middle"
-        >{{connection.name()}}</text>
-
-        <circle
-            ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5" 
-            ng-attr-cx="{{connection.sourceCoordX()}}" 
-            ng-attr-cy="{{connection.sourceCoordY()}}" 
-            >
+        <circle ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
+                r="5"
+                ng-attr-cx="{{connection.sourceCoordX()}}"
+                ng-attr-cy="{{connection.sourceCoordY()}}">
         </circle>
-
-        <circle
-            ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-            r="5" 
-            ng-attr-cx="{{connection.destCoordX()}}" 
-            ng-attr-cy="{{connection.destCoordY()}}" 
-            >
+        <circle ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
+                r="3"
+                ng-attr-cx="{{connection.destCoordX()}}"
+                ng-attr-cy="{{connection.destCoordY() - 5}}">
         </circle>
+        <svg height="20"
+             width="30"
+             ng-attr-x="{{connection.destCoordX() - 8}}"
+             ng-attr-y="{{connection.destCoordY() - 4}}">
+            <path d="M0,0 L17,0 L8,12 z" ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}" />
+        </svg>
     </g>
   </g>
 

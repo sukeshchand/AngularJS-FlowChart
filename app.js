@@ -58,14 +58,15 @@ angular.module('app', ['flowChart', ])
 	// Setup the data-model for the chart.
 	//
 	var chartDataModel = {
-
-		nodes: [
+        nodes: [
 			{
 				name: "Example Node 1",
 				id: 0,
 				x: 0,
 				y: 0,
-				width: 350,
+				width: 600,
+				height: 200,
+				NodeDirection: "Vertical",
 				inputConnectors: [
 					{
 						name: "A",
@@ -95,6 +96,9 @@ angular.module('app', ['flowChart', ])
 				id: 1,
 				x: 400,
 				y: 200,
+				width: 600,
+				height: 200,
+				NodeDirection: "Vertical",
 				inputConnectors: [
 					{
 						name: "A",
