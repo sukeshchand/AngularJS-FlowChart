@@ -1,4 +1,4 @@
-<svg 
+﻿<svg 
   class="draggable-container"
   xmlns="http://www.w3.org/2000/svg"
   ng-mousedown="mouseDown($event)"
@@ -30,19 +30,24 @@
     ng-mousedown="nodeMouseDown($event, node)"
     ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
     >
-    <rect 
-      ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
-      ry="10" 
-      rx="10" 
-      x="0" 
-      y="0" 
-      ng-attr-width="{{node.width()}}" 
-      ng-attr-height="{{node.height()}}" 
-      fill="url(#nodeBackgroundGradient)"
-      >
+      <rect
+          ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
+          ry="10"
+          rx="10"
+          x="0"
+          y="0"
+          ng-attr-width="{{node.width()}}"
+          ng-attr-height="{{node.height()}}"
+          fill="url(#nodeBackgroundGradient)">
 
-    </rect>
-
+      </rect>
+      <switch>
+          <foreignObject ng-attr-x="5" y="25" ng-attr-width="{{node.width()}}" ng-attr-height="{{node.height()}}">
+              <div style="text-align: center;">
+                  <p style="padding: 10px; word-break: break-all" ng-bind-html="node.name() | html"></p>
+              </div>
+          </foreignObject>
+      </switch>
     <g
       ng-repeat="connector in node.inputConnectors"
       ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
