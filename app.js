@@ -66,27 +66,10 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 	var chartDataModel = {
 	    "nodes": [
             {
-                "name": "Deposit Criteria - <b>200 SEK</b>",
-                "id": 0,
-                "x": 391,
-                "y": 117,
-                "width": 200,
-                "height": 80,
-                "NodeDirection": "Vertical",
-                "outputConnectors": [
-                    {
-                        "name": "A"
-                    },
-                    {
-                        "name": "New connector"
-                    }
-                ]
-            },
-            {
                 "name": "Netent Bonus<br/> Bonus Code: <b>HHDD003</B>",
                 "id": 1,
-                "x": 586,
-                "y": 315,
+                "x": 797,
+                "y": 287,
                 "width": 220,
                 "height": 99,
                 "NodeDirection": "Vertical",
@@ -104,8 +87,8 @@ angular.module('app', ['flowChart', 'ngSanitize'])
             {
                 "name": "Turn Over Criteria<br/> Min Turn Over: <b>200 SEK</b>",
                 "id": 10,
-                "x": 143,
-                "y": 303,
+                "x": 73,
+                "y": 295,
                 "width": 200,
                 "height": 99,
                 "NodeDirection": "Vertical",
@@ -123,8 +106,183 @@ angular.module('app', ['flowChart', 'ngSanitize'])
             {
                 "name": "Call Center Criteria",
                 "id": 11,
-                "x": 380,
-                "y": 592,
+                "x": 446,
+                "y": 706,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ]
+            },
+            {
+                "name": "Netent Bonus<br/> Bonus Code: <b>HDDFE</B>",
+                "id": 13,
+                "x": 399,
+                "y": 21,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Deposit Criteria - <b>200 SEK</b>",
+                "id": 0,
+                "x": 401,
+                "y": 135,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "A"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "A"
+                    },
+                    {
+                        "name": "B"
+                    },
+                    {
+                        "name": "C"
+                    },
+                    {
+                        "name": "D"
+                    }
+                ]
+            },
+            {
+                "name": "Netent Bonus<br/> Bonus Code: <b>YYRREE</B>",
+                "id": 14,
+                "x": 317,
+                "y": 296,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Deposit Critera 200 SEK",
+                "id": 15,
+                "x": 560,
+                "y": 293,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Turn Over Critera",
+                "id": 16,
+                "x": 76,
+                "y": 450,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Netent Bonus<br/> Bonus Code: <b>FFRREW</B>",
+                "id": 17,
+                "x": 318,
+                "y": 450,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Turn Over Criteria",
+                "id": 18,
+                "x": 563,
+                "y": 454,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Call Center",
+                "id": 19,
+                "x": 802,
+                "y": 461,
+                "width": 200,
+                "height": 80,
+                "NodeDirection": "Vertical",
+                "inputConnectors": [
+                    {
+                        "name": "X"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Send Mail",
+                "id": 20,
+                "x": 442,
+                "y": 587.9999732971191,
                 "width": 200,
                 "height": 80,
                 "NodeDirection": "Vertical",
@@ -133,7 +291,18 @@ angular.module('app', ['flowChart', 'ngSanitize'])
                         "name": "X"
                     },
                     {
-                        "name": "X"
+                        "name": "Y"
+                    },
+                    {
+                        "name": "Z"
+                    },
+                    {
+                        "name": "A"
+                    }
+                ],
+                "outputConnectors": [
+                    {
+                        "name": "1"
                     }
                 ]
             }
@@ -141,21 +310,11 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 	    "connections": [
             {
                 "source": {
-                    "nodeID": 0,
+                    "nodeID": 13,
                     "connectorIndex": 0
                 },
                 "dest": {
-                    "nodeID": 1,
-                    "connectorIndex": 0
-                }
-            },
-            {
-                "source": {
                     "nodeID": 0,
-                    "connectorIndex": 1
-                },
-                "dest": {
-                    "nodeID": 10,
                     "connectorIndex": 0
                 }
             },
@@ -165,8 +324,28 @@ angular.module('app', ['flowChart', 'ngSanitize'])
                     "connectorIndex": 0
                 },
                 "dest": {
-                    "nodeID": 11,
-                    "connectorIndex": 1
+                    "nodeID": 16,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 14,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 17,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 15,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 18,
+                    "connectorIndex": 0
                 }
             },
             {
@@ -175,8 +354,98 @@ angular.module('app', ['flowChart', 'ngSanitize'])
                     "connectorIndex": 0
                 },
                 "dest": {
+                    "nodeID": 19,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 20,
+                    "connectorIndex": 0
+                },
+                "dest": {
                     "nodeID": 11,
                     "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 0,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 10,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 0,
+                    "connectorIndex": 1
+                },
+                "dest": {
+                    "nodeID": 14,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 0,
+                    "connectorIndex": 2
+                },
+                "dest": {
+                    "nodeID": 15,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 0,
+                    "connectorIndex": 3
+                },
+                "dest": {
+                    "nodeID": 1,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 16,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 20,
+                    "connectorIndex": 0
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 17,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 20,
+                    "connectorIndex": 1
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 18,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 20,
+                    "connectorIndex": 2
+                }
+            },
+            {
+                "source": {
+                    "nodeID": 19,
+                    "connectorIndex": 0
+                },
+                "dest": {
+                    "nodeID": 20,
+                    "connectorIndex": 3
                 }
             }
 	    ]
@@ -196,7 +465,8 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 		}
 	};
         $scope.nodesSelectChanged = function(nodes, sel) {
-            alert(nodes  + ' - ' + sel.toString());
+            //alert(nodes[0].name()  + ' - ' + sel.toString());
+            console.log(nodes[0].name() + ' - ' + sel.toString());
         };
 
 	//
