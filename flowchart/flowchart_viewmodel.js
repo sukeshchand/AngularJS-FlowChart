@@ -212,16 +212,13 @@ var flowchart = {
 
 		//
 		// Internal function to add a connector.
-		this._addConnector = function (connectorDataModel, x, connectorsDataModel, connectorsViewModel) {
-		    var nodeHeight = this.height ? this.height() : this.defaultNodeHeight;
-			var connectorViewModel = 
-				new flowchart.ConnectorViewModel(connectorDataModel, x, 
-						flowchart.computeConnectorY(connectorsViewModel.length, nodeHeight), this);
-
-			connectorsDataModel.push(connectorDataModel);
-
-			// Add to node's view model.
-			connectorsViewModel.push(connectorViewModel);
+		this._addConnector = function (inputConnector, connectorDataModel, connectorsDataModel) {
+		    connectorsDataModel.push(connectorDataModel);
+		    if (inputConnector) {
+		        this.inputConnectors = createConnectorsViewModel(true, connectorsDataModel, 0, 0, this);
+		    } else {
+		        this.outputConnectors = createConnectorsViewModel(false, connectorsDataModel, this.data.width, this.data.height, this);
+		    }
 		}
 
 		//
@@ -232,7 +229,7 @@ var flowchart = {
 			if (!this.data.inputConnectors) {
 				this.data.inputConnectors = [];
 			}
-			this._addConnector(connectorDataModel, 0, this.data.inputConnectors, this.inputConnectors);
+			this._addConnector(true, connectorDataModel, this.data.inputConnectors);
 		};
 
 		//
@@ -243,7 +240,7 @@ var flowchart = {
 			if (!this.data.outputConnectors) {
 				this.data.outputConnectors = [];
 			}
-			this._addConnector(connectorDataModel, this.data.width, this.data.outputConnectors, this.outputConnectors);
+			this._addConnector(false, connectorDataModel, this.data.outputConnectors);
 		};
 	};
 
@@ -430,6 +427,19 @@ var flowchart = {
 	// View model for the chart.
 	//
 	flowchart.ChartViewModel = function (chartDataModel) {
+
+	    //
+	    // Get Next node Id
+        //
+	    this.GetNextNodeId = function () {
+	        var maxId = 0;
+	        for (var i = 0; i < this.nodes.length; i++) {
+	            if (this.nodes[i].data.id > maxId) {
+	                maxId = this.nodes[i].data.id;
+	            }
+	        }
+	        return maxId;
+	    }
 
 		//
 		// Find a specific node within the chart.

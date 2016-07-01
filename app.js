@@ -56,11 +56,6 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 	var escKeyCode = 27;
 
 	//
-	// Selects the next node id.
-	//
-	var nextNodeID = 10;
-
-	//
 	// Setup the data-model for the chart.
 	//
 	var chartDataModel = {
@@ -510,13 +505,13 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 		if (!nodeName) {
 			return;
 		}
-
+		var maxNodeId = $scope.chartViewModel.GetNextNodeId();
 		//
 		// Template for a new node.
 		//
 		var newNodeDataModel = {
 			name: nodeName,
-			id: nextNodeID++,
+			id: maxNodeId + 1,
 			x: 0,
 			y: 0,
 			width: 200,
@@ -536,6 +531,8 @@ angular.module('app', ['flowChart', 'ngSanitize'])
 
 		$scope.chartViewModel.addNode(newNodeDataModel);
 	};
+
+
 
 	//
 	// Add an input connector to selected nodes.
