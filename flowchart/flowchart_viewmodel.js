@@ -14,6 +14,7 @@ flowchart.defaultNodeHeight = 120;
 flowchart.defaultNodeDirection = "Vertical";
 flowchart.defaultCanvasMinWidth = "100%";
 flowchart.defaultCanvasMinHeight = "100%";
+flowchart.defaultNodeFillStyle = "url(#nodeBackgroundGradient)";
 
 //
 // Amount of space reserved for displaying the node's name.
@@ -172,16 +173,23 @@ flowchart.NodeViewModel = function (nodeDataModel) {
         if (this.data.height) {
             return this.data.width;
         } else {
-            return this.defaultNodeWidth;
+            return flowchart.defaultNodeWidth;
         }
-
     }
 
     this.height = function () {
         if (this.data.height) {
             return this.data.height;
         } else {
-            return this.defaultNodeHeight;
+            return flowchart.defaultNodeHeight;
+        }
+    }
+
+    this.fillStyle = function () {
+        if (this.data.fillStyle) {
+            return this.data.fillStyle;
+        } else {
+            return flowchart.defaultNodeFillStyle;
         }
     }
 
@@ -222,6 +230,7 @@ flowchart.NodeViewModel = function (nodeDataModel) {
         } else {
             this.outputConnectors = createConnectorsViewModel(false, connectorsDataModel, this.data.width, this.data.height, this);
         }
+        this.connections = [];
     }
 
     //
@@ -252,13 +261,11 @@ flowchart.NodeViewModel = function (nodeDataModel) {
 //
 var createNodesViewModel = function (nodesDataModel) {
     var nodesViewModel = [];
-
     if (nodesDataModel) {
         for (var i = 0; i < nodesDataModel.length; ++i) {
             nodesViewModel.push(new flowchart.NodeViewModel(nodesDataModel[i]));
         }
     }
-
     return nodesViewModel;
 };
 
@@ -294,7 +301,7 @@ flowchart.ConnectionViewModel = function (connectionDataModel, sourceConnector, 
     }
 
     this.sourceTangentX = function () {
-        return flowchart.computeConnectionSourceTangentX(this.sourceCoord(), this.destCoord());
+        return flowchart.computeConnectionSourceTangentX(this.sourceCoord(), this.destCoord()); 
     };
 
     this.sourceTangentY = function () {
@@ -335,8 +342,6 @@ flowchart.ConnectionViewModel = function (connectionDataModel, sourceConnector, 
             scale = 0.5;
         return this.sourceCoordY() * (1 - scale) + this.destCoordY() * scale;
     };
-
-
     //
     // Select the connection.
     //
@@ -371,7 +376,7 @@ flowchart.ConnectionViewModel = function (connectionDataModel, sourceConnector, 
 //
 var computeConnectionTangentOffset = function (pt1, pt2) {
 
-    return (pt2.x - pt1.x) / 2;
+    return ((pt2.x - pt1.x) / 2);
 }
 
 //
@@ -386,7 +391,6 @@ flowchart.computeConnectionSourceTangentX = function (pt1, pt2) {
 // Compute the tangent for the bezier curve.
 //
 flowchart.computeConnectionSourceTangentY = function (pt1, pt2) {
-
     return pt1.y;
 };
 
@@ -404,7 +408,6 @@ flowchart.computeConnectionSourceTangent = function (pt1, pt2) {
 // Compute the tangent for the bezier curve.
 //
 flowchart.computeConnectionDestTangentX = function (pt1, pt2) {
-
     return pt2.x - computeConnectionTangentOffset(pt1, pt2);
 };
 
@@ -412,7 +415,6 @@ flowchart.computeConnectionDestTangentX = function (pt1, pt2) {
 // Compute the tangent for the bezier curve.
 //
 flowchart.computeConnectionDestTangentY = function (pt1, pt2) {
-
     return pt2.y;
 };
 
@@ -444,7 +446,6 @@ flowchart.ChartViewModel = function (chartDataModel) {
         return maxId;
     }
  
-
     this.updateCanvasSize = function () {
         var tmpCanvasHeight = 0;
         var tmpCanvasWidth = 0;
@@ -556,8 +557,12 @@ flowchart.ChartViewModel = function (chartDataModel) {
 
     this.updateCanvasSize();
 
+    this.refreshConnections = function () {
+        this.connections = this._createConnectionsViewModel(this.data.connections);
+    }
+
     // Create a view-model for connections.
-    this.connections = this._createConnectionsViewModel(this.data.connections);
+    this.refreshConnections();
 
     //
     // Create a view model for a new connection.
@@ -861,6 +866,4 @@ flowchart.ChartViewModel = function (chartDataModel) {
 
         return selectedConnections;
     };
-
-
 };
