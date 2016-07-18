@@ -14,6 +14,7 @@ angular.module('flowChart', ['dragging'])
         scope: {
             chart: "=chart",
             nodesselectchanged: '&nodesSelectChanged',
+            nodedoubleclick: '&nodeDoubleClick',
             canvasresize: '&canvasResize',
         },
 
@@ -343,6 +344,10 @@ angular.module('flowChart', ['dragging'])
             },
 
         });
+    };
+
+    $scope.nodeDoubleClick = function (evt, node) {
+        $scope.nodedoubleclick({ node: node});
     };
 
     //

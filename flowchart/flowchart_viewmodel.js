@@ -14,7 +14,7 @@ flowchart.defaultNodeHeight = 120;
 flowchart.defaultNodeDirection = "Vertical";
 flowchart.defaultCanvasMinWidth = "100%";
 flowchart.defaultCanvasMinHeight = "100%";
-flowchart.defaultNodeFillStyle = "url(#nodeBackgroundGradient)";
+flowchart.defaultNodeFillStyle = "url(#nodeBackgroundGradient1)";
 
 //
 // Amount of space reserved for displaying the node's name.
